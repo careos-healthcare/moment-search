@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import { YouTubePlayer } from "@/components/YouTubePlayer";
 import { MomentCard } from "@/components/MomentCard";
@@ -7,8 +6,10 @@ import { EmailCapture } from "@/components/EmailCapture";
 import { SiteNav } from "@/components/SiteNav";
 import { MomentOpenedTracker } from "@/components/MomentOpenedTracker";
 import { MomentShareActions } from "@/components/MomentShareActions";
+import { Logo } from "@/components/Logo";
 import { getChunkBySlug, getRelatedChunks } from "@/lib/data/dataset";
 import { semanticToDisplay } from "@/lib/moments";
+import { BRAND } from "@/lib/brand";
 import { youtubeWatchUrl } from "@/lib/youtube/format";
 
 interface MomentPageProps {
@@ -30,9 +31,14 @@ export async function generateMetadata({ params }: MomentPageProps): Promise<Met
     title,
     description,
     openGraph: {
-      title: `${title} | MomentSearch`,
+      title: `${title} | ${BRAND.name}`,
       description,
       type: "video.other",
+    },
+    twitter: {
+      card: "summary",
+      title: `${title} | ${BRAND.name}`,
+      description,
     },
   };
 }
@@ -68,19 +74,7 @@ export default async function MomentPage({ params }: MomentPageProps) {
       <MomentOpenedTracker slug={slug} creator={chunk.creator} />
       <header className="sticky top-0 z-50 border-b border-white/[0.06] bg-zinc-950/80 backdrop-blur-xl">
         <div className="mx-auto flex max-w-3xl items-center justify-between gap-4 px-4 py-4 sm:px-6">
-          <Link
-            href="/"
-            className="group flex items-center gap-2 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500/50"
-          >
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-violet-600 to-indigo-600 shadow-lg shadow-violet-500/20 transition-transform group-hover:scale-105">
-              <svg className="h-4 w-4 text-white" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M8 5v14l11-7z" />
-              </svg>
-            </div>
-            <span className="text-sm font-semibold tracking-tight text-white">
-              MomentSearch
-            </span>
-          </Link>
+          <Logo />
 
           <div className="flex items-center gap-3">
             <a

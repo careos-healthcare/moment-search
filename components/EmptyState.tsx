@@ -54,7 +54,7 @@ export function EmptyState({ query, variant }: EmptyStateProps) {
 
       {isNoResults && (
         <div className="mt-8 flex flex-wrap justify-center gap-2">
-          {["RAG explained", "Naval leverage", "Huberman dopamine"].map(
+          {["how to focus", "confidence", "how to get rich"].map(
             (suggestion) => (
               <Link
                 key={suggestion}

@@ -1,10 +1,11 @@
 import type { MomentDisplay } from "@/lib/moments";
 import { momentSharePath } from "@/lib/moments";
+import { BRAND } from "@/lib/brand";
 import { youtubeWatchUrl } from "@/lib/youtube/format";
 
 export function buildShareCardText(
   moment: MomentDisplay,
-  origin = "https://momentsearch.app",
+  origin: string = BRAND.siteUrl,
 ): string {
   const url = `${origin}${momentSharePath(moment.slug)}`;
   const youtubeLine = moment.videoId
@@ -19,7 +20,7 @@ export function buildShareCardText(
     moment.snippet.slice(0, 220) + (moment.snippet.length > 220 ? "…" : ""),
     youtubeLine,
     "",
-    `Found on MomentSearch → ${url}`,
+    `Found on ${BRAND.name} → ${url}`,
   ]
     .filter(Boolean)
     .join("\n");

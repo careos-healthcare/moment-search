@@ -13,10 +13,12 @@ export function slugToQuery(slug: string): string {
 }
 
 export const exampleQueries = [
-  "best explanation of RAG",
-  "Naval on leverage",
-  "Huberman dopamine",
-  "How Kubernetes works",
-  "startup product-market fit",
-  "Stoic philosophy daily practice",
+  "ADHD productivity",
+  "how to focus",
+  "how to negotiate salary",
+  "how to stop procrastinating",
+  "how to get rich",
+  "relationship advice",
+  "confidence",
+  "startup ideas",
 ] as const;

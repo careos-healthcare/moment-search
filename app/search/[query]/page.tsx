@@ -10,6 +10,7 @@ import {
 } from "@/lib/search/server-search";
 import { slugToQuery } from "@/lib/search/url";
 import { hasIngestedData } from "@/lib/data/dataset";
+import { DEFAULT_DESCRIPTION } from "@/lib/brand";
 
 interface SearchPageProps {
   params: Promise<{ query: string }>;
@@ -22,8 +23,10 @@ export async function generateMetadata({
   const query = slugToQuery(slug);
 
   return {
-    title: query ? `${query} — MomentSearch` : "Search — MomentSearch",
-    description: `Find the exact podcast moment about "${query}". Timestamps, explanations, and related insights.`,
+    title: query || "Search",
+    description: query
+      ? `Find exact podcast and YouTube moments about "${query}".`
+      : DEFAULT_DESCRIPTION,
   };
 }
 

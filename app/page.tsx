@@ -1,10 +1,12 @@
-import Link from "next/link";
 import { SearchBar } from "@/components/SearchBar";
 import { TopicChip } from "@/components/TopicChip";
 import { HeroBackground } from "@/components/HeroBackground";
 import { SiteNav } from "@/components/SiteNav";
 import { EmailCapture } from "@/components/EmailCapture";
 import CreatorLandingSection from "@/components/CreatorLandingSection";
+import CtaSection from "@/components/CtaSection";
+import { SiteFooter } from "@/components/SiteFooter";
+import { BRAND } from "@/lib/brand";
 import { exampleQueries } from "@/lib/search/url";
 
 export default function Home() {
@@ -12,7 +14,8 @@ export default function Home() {
     <main className="relative flex min-h-screen flex-col">
       <HeroBackground />
 
-      <div className="relative z-10 flex w-full justify-end px-4 pt-4 sm:px-6">
+      <div className="relative z-10 flex w-full items-center justify-between px-4 pt-4 sm:px-6">
+        <p className="hidden text-xs text-zinc-500 sm:block">{BRAND.tagline}</p>
         <SiteNav />
       </div>
 
@@ -20,19 +23,15 @@ export default function Home() {
         <div className="w-full max-w-2xl text-center">
           <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-4 py-1.5 text-xs font-medium text-zinc-400 backdrop-blur-sm">
             <span className="inline-block h-1.5 w-1.5 rounded-full bg-violet-500 shadow-[0_0_8px_rgba(139,92,246,0.8)]" />
-            Moment retrieval engine
+            {BRAND.tagline}
           </div>
 
           <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl md:text-6xl">
-            Find the exact{" "}
-            <span className="bg-gradient-to-r from-violet-400 via-purple-400 to-indigo-400 bg-clip-text text-transparent">
-              moment
-            </span>
+            Search YouTube and podcasts by exact timestamp.
           </h1>
 
           <p className="mx-auto mt-5 max-w-lg text-base leading-relaxed text-zinc-400 sm:text-lg">
-            Find the exact moment experts explain anything clearly. Skip the
-            full episode — jump straight to the insight.
+            Jump directly to the moment experts explain what you care about.
           </p>
 
           <div className="mt-10">
@@ -51,7 +50,9 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="mt-20 grid w-full max-w-3xl grid-cols-1 gap-4 sm:grid-cols-3 sm:gap-6">
+        <CtaSection />
+
+        <div className="mt-16 grid w-full max-w-3xl grid-cols-1 gap-4 sm:grid-cols-3 sm:gap-6">
           {[
             {
               title: "Exact timestamps",
@@ -87,17 +88,7 @@ export default function Home() {
         </div>
       </div>
 
-      <footer className="relative z-10 border-t border-white/[0.06] py-6 text-center text-xs text-zinc-600">
-        <p>MomentSearch — discover learning moments, not chatbots.</p>
-        <p className="mt-2 flex justify-center gap-4">
-          <Link href="/saved" className="hover:text-zinc-400">
-            Saved
-          </Link>
-          <Link href="/pricing" className="hover:text-zinc-400">
-            Pricing
-          </Link>
-        </p>
-      </footer>
+      <SiteFooter />
     </main>
   );
 }

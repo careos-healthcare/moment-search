@@ -14,7 +14,7 @@ export default function CreatorLandingSection() {
           <p className="mt-4 text-sm leading-relaxed text-zinc-400 sm:text-base">
             Listeners don&apos;t want another chatbot — they want the exact
             minute where you explained leverage, dopamine, or product-market
-            fit. MomentSearch indexes transcripts and returns timestamped
+            fit. YouTubeTimeSearch indexes transcripts and returns timestamped
             clips your audience can share.
           </p>
         </div>

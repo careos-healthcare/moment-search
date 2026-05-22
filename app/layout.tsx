@@ -1,5 +1,10 @@
-import type { Metadata, Viewport } from "next";
+import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import {
+  BRAND,
+  DEFAULT_DESCRIPTION,
+  DEFAULT_TITLE,
+} from "@/lib/brand";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -13,15 +18,39 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(BRAND.siteUrl),
   title: {
-    default: "MomentSearch — Find the exact podcast moment",
-    template: "%s | MomentSearch",
+    default: DEFAULT_TITLE,
+    template: `%s | ${BRAND.name}`,
   },
-  description:
-    "Find the exact podcast and video moment where experts explain anything clearly. Timestamps, insights, and related moments.",
+  description: DEFAULT_DESCRIPTION,
+  applicationName: BRAND.name,
+  keywords: [
+    "YouTube timestamp search",
+    "podcast moment search",
+    "find exact video moment",
+    "podcast search by topic",
+  ],
+  openGraph: {
+    type: "website",
+    locale: "en_GB",
+    url: BRAND.siteUrl,
+    siteName: BRAND.name,
+    title: DEFAULT_TITLE,
+    description: DEFAULT_DESCRIPTION,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: DEFAULT_TITLE,
+    description: DEFAULT_DESCRIPTION,
+    creator: BRAND.twitterHandle,
+  },
+  alternates: {
+    canonical: BRAND.siteUrl,
+  },
 };
 
-export const viewport: Viewport = {
+export const viewport = {
   themeColor: "#09090b",
   width: "device-width",
   initialScale: 1,

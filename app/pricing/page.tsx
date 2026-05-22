@@ -1,11 +1,14 @@
-import type { Metadata } from "next";
 import Link from "next/link";
+import type { Metadata } from "next";
 import { SiteNav } from "@/components/SiteNav";
 import { EmailCapture } from "@/components/EmailCapture";
+import { Logo } from "@/components/Logo";
+import { SiteFooter } from "@/components/SiteFooter";
+import { BRAND } from "@/lib/brand";
 
 export const metadata: Metadata = {
   title: "Pricing",
-  description: "MomentSearch plans — find exact podcast moments with Free, Pro, and Creator tiers.",
+  description: `${BRAND.name} plans — find exact podcast and YouTube moments with Free, Pro, and Creator tiers.`,
 };
 
 const plans = [
@@ -13,7 +16,7 @@ const plans = [
     name: "Free",
     price: "£0",
     period: "forever",
-    description: "Try the moment retrieval engine.",
+    description: "Try timestamp search free.",
     features: [
       "10 searches per day",
       "Save moments locally",
@@ -63,19 +66,7 @@ export default function PricingPage() {
     <div className="min-h-screen">
       <header className="sticky top-0 z-50 border-b border-white/[0.06] bg-zinc-950/80 backdrop-blur-xl">
         <div className="mx-auto flex max-w-5xl items-center justify-between gap-4 px-4 py-4 sm:px-6">
-          <Link
-            href="/"
-            className="group flex items-center gap-2 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500/50"
-          >
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-violet-600 to-indigo-600 shadow-lg shadow-violet-500/20 transition-transform group-hover:scale-105">
-              <svg className="h-4 w-4 text-white" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M8 5v14l11-7z" />
-              </svg>
-            </div>
-            <span className="text-sm font-semibold tracking-tight text-white">
-              MomentSearch
-            </span>
-          </Link>
+          <Logo />
           <SiteNav />
         </div>
       </header>
@@ -143,6 +134,7 @@ export default function PricingPage() {
           <EmailCapture source="pricing-page" />
         </div>
       </main>
+      <SiteFooter />
     </div>
   );
 }

@@ -41,7 +41,7 @@ async function fetchTimedTextFallback(videoId: string): Promise<TranscriptSegmen
   for (const lang of languages) {
     const url = `https://www.youtube.com/api/timedtext?v=${videoId}&lang=${lang}&fmt=srv3`;
     const response = await fetch(url, {
-      headers: { "User-Agent": "Mozilla/5.0 (compatible; MomentSearch/1.0)" },
+      headers: { "User-Agent": "Mozilla/5.0 (compatible; YouTubeTimeSearch/1.0)" },
     });
 
     if (!response.ok) continue;
