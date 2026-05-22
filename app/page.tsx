@@ -4,6 +4,7 @@ import { TopicChip } from "@/components/TopicChip";
 import { HeroBackground } from "@/components/HeroBackground";
 import { SiteNav } from "@/components/SiteNav";
 import { EmailCapture } from "@/components/EmailCapture";
+import CreatorLandingSection from "@/components/CreatorLandingSection";
 import { exampleQueries } from "@/lib/search/url";
 
 export default function Home() {
@@ -78,6 +79,8 @@ export default function Home() {
             </div>
           ))}
         </div>
+
+        <CreatorLandingSection />
 
         <div id="early-access" className="mt-16 w-full max-w-xl scroll-mt-24">
           <EmailCapture source="homepage" />

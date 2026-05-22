@@ -4,6 +4,7 @@ import { join } from "path";
 export interface Lead {
   email: string;
   source: string;
+  sourcePage: string;
   createdAt: string;
 }
 
@@ -26,13 +27,29 @@ function readLeadsFile(): LeadsFile {
   }
 }
 
-export function appendLead(email: string, source: string): Lead {
+export function getLeads(): Lead[] {
+  return readLeadsFile().leads
+    .map((lead) => ({
+      ...lead,
+      sourcePage: lead.sourcePage ?? "unknown",
+    }))
+    .sort(
+      (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+    );
+}
+
+export function appendLead(
+  email: string,
+  source: string,
+  sourcePage: string,
+): Lead {
   mkdirSync(DATA_DIR, { recursive: true });
 
   const file = readLeadsFile();
   const lead: Lead = {
     email: email.toLowerCase().trim(),
     source,
+    sourcePage,
     createdAt: new Date().toISOString(),
   };
 
@@ -47,4 +64,15 @@ export function appendLead(email: string, source: string): Lead {
 
 export function isValidEmail(email: string): boolean {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
+}
+
+export function getLeadSummary(): { total: number; bySource: Record<string, number> } {
+  const leads = getLeads();
+  const bySource: Record<string, number> = {};
+
+  for (const lead of leads) {
+    bySource[lead.source] = (bySource[lead.source] ?? 0) + 1;
+  }
+
+  return { total: leads.length, bySource };
 }

@@ -6,6 +6,7 @@ import { MomentCard } from "@/components/MomentCard";
 import { EmailCapture } from "@/components/EmailCapture";
 import { SiteNav } from "@/components/SiteNav";
 import { MomentOpenedTracker } from "@/components/MomentOpenedTracker";
+import { MomentShareActions } from "@/components/MomentShareActions";
 import { getChunkBySlug, getRelatedChunks } from "@/lib/data/dataset";
 import { semanticToDisplay } from "@/lib/moments";
 import { youtubeWatchUrl } from "@/lib/youtube/format";
@@ -114,6 +115,7 @@ export default async function MomentPage({ params }: MomentPageProps) {
             <span className="mx-1.5 text-zinc-600">·</span>
             {chunk.show}
           </p>
+          <MomentShareActions moment={moment} />
         </div>
 
         <section className="mt-8 rounded-2xl border border-white/[0.08] bg-white/[0.03] p-5 backdrop-blur-xl sm:p-6">

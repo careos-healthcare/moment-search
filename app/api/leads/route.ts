@@ -3,9 +3,14 @@ import { appendLead, isValidEmail } from "@/lib/data/leads";
 
 export async function POST(request: NextRequest) {
   try {
-    const body = (await request.json()) as { email?: string; source?: string };
+    const body = (await request.json()) as {
+      email?: string;
+      source?: string;
+      sourcePage?: string;
+    };
     const email = body.email?.trim() ?? "";
     const source = body.source?.trim() || "unknown";
+    const sourcePage = body.sourcePage?.trim() || "unknown";
 
     if (!isValidEmail(email)) {
       return NextResponse.json(
@@ -14,7 +19,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    appendLead(email, source);
+    appendLead(email, source, sourcePage);
 
     return NextResponse.json({ ok: true });
   } catch {

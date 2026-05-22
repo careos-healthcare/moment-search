@@ -7,6 +7,7 @@ import { useSavedMoment } from "@/hooks/useSavedMoments";
 import { trackEvent } from "@/lib/client/analytics";
 import type { MomentDisplay } from "@/lib/moments";
 import { momentSharePath } from "@/lib/moments";
+import { buildShareCardText } from "@/lib/share-card";
 import {
   youtubeThumbnailUrl,
   youtubeWatchUrl,
@@ -29,6 +30,7 @@ interface MomentCardProps {
 export function MomentCard({ moment, index = 0 }: MomentCardProps) {
   const { saved, toggle } = useSavedMoment(moment);
   const [copied, setCopied] = useState(false);
+  const [cardCopied, setCardCopied] = useState(false);
 
   const gradient = categoryColors[moment.category];
   const hasVideo = Boolean(moment.videoId);
@@ -40,9 +42,17 @@ export function MomentCard({ moment, index = 0 }: MomentCardProps) {
   async function copyShareLink() {
     const url = `${window.location.origin}${sharePath}`;
     await navigator.clipboard.writeText(url);
-    trackEvent("link_copied", { slug: moment.slug });
+    trackEvent("link_copied", { slug: moment.slug, format: "url" });
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
+  }
+
+  async function copyShareCard() {
+    const text = buildShareCardText(moment, window.location.origin);
+    await navigator.clipboard.writeText(text);
+    trackEvent("link_copied", { slug: moment.slug, format: "share_card" });
+    setCardCopied(true);
+    setTimeout(() => setCardCopied(false), 2000);
   }
 
   return (
@@ -176,6 +186,14 @@ export function MomentCard({ moment, index = 0 }: MomentCardProps) {
               className="inline-flex items-center gap-1.5 rounded-xl border border-white/10 bg-white/[0.04] px-3.5 py-2 text-xs font-medium text-zinc-300 transition-colors hover:border-white/20 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500/50 sm:text-sm"
             >
               {copied ? "Copied!" : "Copy link"}
+            </button>
+
+            <button
+              type="button"
+              onClick={copyShareCard}
+              className="inline-flex items-center gap-1.5 rounded-xl border border-white/10 bg-white/[0.04] px-3.5 py-2 text-xs font-medium text-zinc-300 transition-colors hover:border-white/20 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500/50 sm:text-sm"
+            >
+              {cardCopied ? "Copied!" : "Copy share card"}
             </button>
           </div>
 

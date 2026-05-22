@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import type { MomentDisplay } from "@/lib/moments";
+import { trackEvent } from "@/lib/client/analytics";
 import {
   getSavedMoments,
   isMomentSaved,
@@ -26,6 +27,9 @@ export function useSavedMoment(moment: MomentDisplay) {
   const toggle = useCallback(() => {
     const next = toggleSavedMoment(moment);
     setSaved(next);
+    if (next) {
+      trackEvent("saved_moment", { slug: moment.slug, creator: moment.creator });
+    }
   }, [moment]);
 
   return { saved, toggle };

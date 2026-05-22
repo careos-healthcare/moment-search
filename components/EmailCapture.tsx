@@ -1,7 +1,7 @@
 "use client";
 
 import { FormEvent, useState } from "react";
-import { trackEvent } from "@/lib/client/analytics";
+import { getCurrentSourcePage, trackEvent } from "@/lib/client/analytics";
 
 interface EmailCaptureProps {
   source: string;
@@ -22,7 +22,11 @@ export function EmailCapture({ source, variant = "inline" }: EmailCaptureProps) 
       const response = await fetch("/api/leads", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, source }),
+        body: JSON.stringify({
+          email,
+          source,
+          sourcePage: getCurrentSourcePage(),
+        }),
       });
 
       const data = (await response.json()) as { error?: string };
