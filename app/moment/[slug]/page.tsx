@@ -3,6 +3,9 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { YouTubePlayer } from "@/components/YouTubePlayer";
 import { MomentCard } from "@/components/MomentCard";
+import { EmailCapture } from "@/components/EmailCapture";
+import { SiteNav } from "@/components/SiteNav";
+import { MomentOpenedTracker } from "@/components/MomentOpenedTracker";
 import { getChunkBySlug, getRelatedChunks } from "@/lib/data/dataset";
 import { semanticToDisplay } from "@/lib/moments";
 import { youtubeWatchUrl } from "@/lib/youtube/format";
@@ -61,6 +64,7 @@ export default async function MomentPage({ params }: MomentPageProps) {
 
   return (
     <div className="min-h-screen">
+      <MomentOpenedTracker slug={slug} creator={chunk.creator} />
       <header className="sticky top-0 z-50 border-b border-white/[0.06] bg-zinc-950/80 backdrop-blur-xl">
         <div className="mx-auto flex max-w-3xl items-center justify-between gap-4 px-4 py-4 sm:px-6">
           <Link
@@ -77,14 +81,17 @@ export default async function MomentPage({ params }: MomentPageProps) {
             </span>
           </Link>
 
-          <a
-            href={youtubeUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-xs font-medium text-zinc-400 transition-colors hover:text-white sm:text-sm"
-          >
-            Open on YouTube ↗
-          </a>
+          <div className="flex items-center gap-3">
+            <a
+              href={youtubeUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hidden text-xs font-medium text-zinc-400 transition-colors hover:text-white sm:inline sm:text-sm"
+            >
+              Open on YouTube ↗
+            </a>
+            <SiteNav />
+          </div>
         </div>
       </header>
 
@@ -129,6 +136,10 @@ export default async function MomentPage({ params }: MomentPageProps) {
               {tag}
             </span>
           ))}
+        </div>
+
+        <div className="mt-10">
+          <EmailCapture source="moment-page" variant="compact" />
         </div>
 
         {related.length > 0 && (

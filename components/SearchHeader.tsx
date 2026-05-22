@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { SearchBar } from "./SearchBar";
+import { SiteNav } from "./SiteNav";
 
 interface SearchHeaderProps {
   query?: string;
@@ -13,7 +14,7 @@ export function SearchHeader({ query, resultCount }: SearchHeaderProps) {
         <div className="flex items-center justify-between gap-4">
           <Link
             href="/"
-            className="group flex shrink-0 items-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500/50 rounded-lg"
+            className="group flex shrink-0 items-center gap-2 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500/50"
           >
             <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-violet-600 to-indigo-600 shadow-lg shadow-violet-500/20 transition-transform group-hover:scale-105">
               <svg
@@ -30,12 +31,15 @@ export function SearchHeader({ query, resultCount }: SearchHeaderProps) {
             </span>
           </Link>
 
-          {query && resultCount !== undefined && (
-            <p className="text-xs text-zinc-500 sm:text-sm">
-              <span className="font-medium text-zinc-300">{resultCount}</span>{" "}
-              moment{resultCount !== 1 ? "s" : ""} found
-            </p>
-          )}
+          <div className="flex items-center gap-3">
+            {query && resultCount !== undefined && (
+              <p className="hidden text-xs text-zinc-500 sm:block sm:text-sm">
+                <span className="font-medium text-zinc-300">{resultCount}</span>{" "}
+                moment{resultCount !== 1 ? "s" : ""} found
+              </p>
+            )}
+            <SiteNav />
+          </div>
         </div>
 
         <SearchBar defaultValue={query} size="compact" />

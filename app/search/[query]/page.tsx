@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { MomentCard } from "@/components/MomentCard";
 import { SearchHeader } from "@/components/SearchHeader";
 import { EmptyState } from "@/components/EmptyState";
+import { EmailCapture } from "@/components/EmailCapture";
+import { SearchPerformedTracker } from "@/components/SearchPerformedTracker";
 import {
   getRelatedMoments,
   searchMoments,
@@ -44,6 +46,7 @@ export default async function SearchPage({ params }: SearchPageProps) {
 
   return (
     <div className="min-h-screen">
+      <SearchPerformedTracker query={query} />
       <SearchHeader query={query} resultCount={results.length} />
 
       <div className="mx-auto max-w-3xl px-4 py-8 sm:px-6">
@@ -96,6 +99,10 @@ export default async function SearchPage({ params }: SearchPageProps) {
             )}
           </>
         )}
+
+        <div className="mt-12">
+          <EmailCapture source="search-results" variant="compact" />
+        </div>
       </div>
     </div>
   );

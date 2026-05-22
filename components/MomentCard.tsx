@@ -3,6 +3,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import { useSavedMoment } from "@/hooks/useSavedMoments";
+import { trackEvent } from "@/lib/client/analytics";
 import type { MomentDisplay } from "@/lib/moments";
 import { momentSharePath } from "@/lib/moments";
 import {
@@ -25,7 +27,7 @@ interface MomentCardProps {
 }
 
 export function MomentCard({ moment, index = 0 }: MomentCardProps) {
-  const [saved, setSaved] = useState(false);
+  const { saved, toggle } = useSavedMoment(moment);
   const [copied, setCopied] = useState(false);
 
   const gradient = categoryColors[moment.category];
@@ -38,6 +40,7 @@ export function MomentCard({ moment, index = 0 }: MomentCardProps) {
   async function copyShareLink() {
     const url = `${window.location.origin}${sharePath}`;
     await navigator.clipboard.writeText(url);
+    trackEvent("link_copied", { slug: moment.slug });
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   }
@@ -107,7 +110,7 @@ export function MomentCard({ moment, index = 0 }: MomentCardProps) {
 
             <button
               type="button"
-              onClick={() => setSaved(!saved)}
+              onClick={toggle}
               aria-label={saved ? "Remove from saved" : "Save moment"}
               aria-pressed={saved}
               className="shrink-0 rounded-lg p-2 text-zinc-500 transition-colors hover:bg-white/[0.06] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500/50"

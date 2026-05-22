@@ -1,6 +1,9 @@
+import Link from "next/link";
 import { SearchBar } from "@/components/SearchBar";
 import { TopicChip } from "@/components/TopicChip";
 import { HeroBackground } from "@/components/HeroBackground";
+import { SiteNav } from "@/components/SiteNav";
+import { EmailCapture } from "@/components/EmailCapture";
 import { exampleQueries } from "@/lib/search/url";
 
 export default function Home() {
@@ -8,9 +11,12 @@ export default function Home() {
     <main className="relative flex min-h-screen flex-col">
       <HeroBackground />
 
-      <div className="relative z-10 flex flex-1 flex-col items-center justify-center px-4 pb-16 pt-12 sm:px-6 sm:pb-24 sm:pt-16">
+      <div className="relative z-10 flex w-full justify-end px-4 pt-4 sm:px-6">
+        <SiteNav />
+      </div>
+
+      <div className="relative z-10 flex flex-1 flex-col items-center justify-center px-4 pb-16 pt-8 sm:px-6 sm:pb-24 sm:pt-12">
         <div className="w-full max-w-2xl text-center">
-          {/* Logo mark */}
           <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-4 py-1.5 text-xs font-medium text-zinc-400 backdrop-blur-sm">
             <span className="inline-block h-1.5 w-1.5 rounded-full bg-violet-500 shadow-[0_0_8px_rgba(139,92,246,0.8)]" />
             Moment retrieval engine
@@ -44,7 +50,6 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Feature hints */}
         <div className="mt-20 grid w-full max-w-3xl grid-cols-1 gap-4 sm:grid-cols-3 sm:gap-6">
           {[
             {
@@ -73,10 +78,22 @@ export default function Home() {
             </div>
           ))}
         </div>
+
+        <div id="early-access" className="mt-16 w-full max-w-xl scroll-mt-24">
+          <EmailCapture source="homepage" />
+        </div>
       </div>
 
       <footer className="relative z-10 border-t border-white/[0.06] py-6 text-center text-xs text-zinc-600">
-        MomentSearch — discover learning moments, not chatbots.
+        <p>MomentSearch — discover learning moments, not chatbots.</p>
+        <p className="mt-2 flex justify-center gap-4">
+          <Link href="/saved" className="hover:text-zinc-400">
+            Saved
+          </Link>
+          <Link href="/pricing" className="hover:text-zinc-400">
+            Pricing
+          </Link>
+        </p>
       </footer>
     </main>
   );
