@@ -1,7 +1,7 @@
 import { SearchBar } from "@/components/SearchBar";
 import { TopicChip } from "@/components/TopicChip";
 import { HeroBackground } from "@/components/HeroBackground";
-import { exampleQueries } from "@/lib/search";
+import { exampleQueries } from "@/lib/search/url";
 
 export default function Home() {
   return (

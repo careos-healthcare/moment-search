@@ -5,8 +5,9 @@ import { EmptyState } from "@/components/EmptyState";
 import {
   getRelatedMoments,
   searchMoments,
-  slugToQuery,
-} from "@/lib/search";
+} from "@/lib/search/server-search";
+import { slugToQuery } from "@/lib/search/url";
+import { hasIngestedData } from "@/lib/data/dataset";
 
 interface SearchPageProps {
   params: Promise<{ query: string }>;
@@ -28,14 +29,15 @@ export default async function SearchPage({ params }: SearchPageProps) {
   const { query: slug } = await params;
   const query = slugToQuery(slug);
   const results = searchMoments(query);
+  const usingTranscripts = hasIngestedData();
 
   const relatedIds = new Set<string>();
   const relatedMoments = results.slice(0, 2).flatMap((result) => {
     return getRelatedMoments(result).filter((m) => {
-      if (results.some((r) => r.id === m.id) || relatedIds.has(m.id)) {
+      if (results.some((r) => r.slug === m.slug) || relatedIds.has(m.slug)) {
         return false;
       }
-      relatedIds.add(m.id);
+      relatedIds.add(m.slug);
       return true;
     });
   });
@@ -46,11 +48,16 @@ export default async function SearchPage({ params }: SearchPageProps) {
 
       <div className="mx-auto max-w-3xl px-4 py-8 sm:px-6">
         {query && results.length > 0 && (
-          <div className="mb-8">
+          <div className="mb-8 space-y-1">
             <h1 className="text-sm font-medium text-zinc-500">
               Results for{" "}
               <span className="text-zinc-300">&ldquo;{query}&rdquo;</span>
             </h1>
+            {usingTranscripts && (
+              <p className="text-xs text-violet-400/80">
+                Ranked by transcript relevance · exact timestamps
+              </p>
+            )}
           </div>
         )}
 
@@ -63,7 +70,7 @@ export default async function SearchPage({ params }: SearchPageProps) {
             <div className="space-y-4">
               {results.map((moment, index) => (
                 <div
-                  key={moment.id}
+                  key={moment.slug}
                   className="animate-fade-in"
                   style={{ animationDelay: `${index * 60}ms` }}
                 >
@@ -82,7 +89,7 @@ export default async function SearchPage({ params }: SearchPageProps) {
                 </p>
                 <div className="space-y-4">
                   {relatedMoments.slice(0, 3).map((moment, index) => (
-                    <MomentCard key={moment.id} moment={moment} index={index} />
+                    <MomentCard key={moment.slug} moment={moment} index={index} />
                   ))}
                 </div>
               </section>

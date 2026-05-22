@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { queryToSlug } from "@/lib/search";
+import { queryToSlug } from "@/lib/search/url";
 
 interface EmptyStateProps {
   query: string;
